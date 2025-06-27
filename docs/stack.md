@@ -49,12 +49,18 @@ Alternatives:
 
 ## Misc:
 
-Typescript
-Zod
-Heroku
-Prettier
-ESLint
-Git/GitHub
+**Typescript**
+
+**Zod**
+
+**Heroku**
+
+**Prettier**
+
+**ESLint**
+
+**Git/GitHub**
+
 
 # Backend:
 
@@ -124,5 +130,6 @@ Alternatives:
 
 ## Misc:
 
-Black formatter
-Git/GitHub
+**Black formatter**
+
+**Git/GitHub**
