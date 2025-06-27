@@ -16,6 +16,7 @@ Alternatives:
 - Scoped CSS
 - Just Tailwind
 - MUI
+- Bootstrap
 
 ## Analytics:
 
