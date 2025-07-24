@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAP: Technology Stack & Data Flow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .flow-arrow {
+            position: relative;
+            width: 100%;
+            height: 2px;
+            background-color: #4A5568;
+        }
+        .flow-arrow::after {
+            content: '▶';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4A5568;
+            font-size: 16px;
+        }
+        .flow-arrow-vert {
+            position: relative;
+            width: 2px;
+            height: 100%;
+            background-color: #4A5568;
+            margin: 0 auto;
+        }
+        .flow-arrow-vert::after {
+            content: '▼';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #4A5568;
+            font-size: 16px;
+        }
+        .component-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .component-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="cap-infographic" class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Childcare Affordability Program (CAP)</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">An Interactive Overview of the Federated Technology Stack, Architecture, and Data Flow</p>
+        </header>
+
+        <section id="actors" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8">The Users</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                <div class="text-center p-6 bg-white rounded-lg shadow-md w-full md:w-1/3">
+                    <div class="text-5xl mb-4">👪</div>
+                    <h3 class="text-xl font-semibold">Families</h3>
+                    <p class="text-gray-600 mt-2">The primary beneficiaries, seeking to find, apply for, and manage childcare subsidies.</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow-md w-full md:w-1/3">
+                    <div class="text-5xl mb-4">🏢</div>
+                    <h3 class="text-xl font-semibold">Care Providers</h3>
+                    <p class="text-gray-600 mt-2">Childcare facilities and individuals who provide services under the CAP program.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="flow-diagram" class="mb-16">
+             <h2 class="text-3xl font-bold text-center mb-10">The User Journey & Data Flow</h2>
+             <div class="relative p-4 md:p-8 bg-white rounded-2xl shadow-lg">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12 items-start">
+
+                    <div class="md:col-span-3 text-center">
+                        <div class="inline-block p-4 bg-emerald-100 text-emerald-800 rounded-lg">
+                            <h4 class="font-bold text-lg">START: Family Seeks Resources</h4>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center text-center">
+                        <div id="comp-finder" class="component-card p-4 border-2 border-blue-500 bg-blue-50 rounded-lg w-full">
+                            <h3 class="font-semibold text-blue-800">1. Subsidy Program Finder/Screener</h3>
+                            <p class="text-xs text-blue-600 mt-1">e.g., MyFriendBen</p>
+                        </div>
+                        <p class="text-sm mt-2 text-gray-600">Family searches for programs anonymously.</p>
+                    </div>
+
+                    <div class="flex items-center">
+                        <div class="flow-arrow"></div>
+                    </div>
+
+                    <div class="flex flex-col items-center text-center">
+                        <div id="comp-idp-1" class="component-card p-4 border-2 border-purple-500 bg-purple-50 rounded-lg w-full">
+                            <h3 class="font-semibold text-purple-800">2. Digital Identity Provider (IdP)</h3>
+                            <p class="text-xs text-purple-600 mt-1">e.g., Google, MyColorado, OKTA</p>
+                        </div>
+                        <p class="text-sm mt-2 text-gray-600">Family chooses to log in to apply for CAP.</p>
+                    </div>
+
+                    <div class="md:col-span-3 flex justify-center h-12">
+                        <div class="flow-arrow-vert"></div>
+                    </div>
+
+                    <div class="flex flex-col items-center text-center md:col-start-3">
+                         <div id="comp-form" class="component-card p-4 border-2 border-teal-500 bg-teal-50 rounded-lg w-full">
+                            <h3 class="font-semibold text-teal-800">3. Program Application Form Builder</h3>
+                            <p class="text-xs text-teal-600 mt-1">e.g., JotForm, FormStack</p>
+                        </div>
+                        <p class="text-sm mt-2 text-gray-600">Redirected to application. Required to sign-in via IdP if not already.</p>
+                    </div>
+
+                    <div class="flex items-center md:col-start-2 md:row-start-3">
+                         <div class="flow-arrow" style="transform: rotate(180deg);"></div>
+                    </div>
+
+                    <div class="flex flex-col items-center text-center md:col-start-1 md:row-start-3">
+                        <div id="comp-idp-2" class="component-card p-4 border-2 border-purple-500 bg-purple-50 rounded-lg w-full">
+                            <h3 class="font-semibold text-purple-800">4. Data Consent (OAuth/OIDC)</h3>
+                             <p class="text-xs text-purple-600 mt-1">via Digital Identity Provider</p>
+                        </div>
+                        <p class="text-sm mt-2 text-gray-600">Applicant consents to share identity data to pre-fill the form.</p>
+                    </div>
+
+                    <div class="md:col-span-3 flex justify-center h-12">
+                        <div class="flow-arrow-vert"></div>
+                    </div>
+
+                    <div class="flex flex-col items-center text-center md:col-start-1">
+                        <div id="comp-db" class="component-card p-4 border-2 border-rose-500 bg-rose-50 rounded-lg w-full">
+                            <h3 class="font-semibold text-rose-800">5. Program Application Database</h3>
+                            <p class="text-xs text-rose-600 mt-1">e.g., Salesforce, HubSpot</p>
+                        </div>
+                        <p class="text-sm mt-2 text-gray-600">Completed application is submitted and stored.</p>
+                    </div>
+                    
+                    <div class="flex items-center">
+                         <div class="flow-arrow"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-y-4">
+                        <div id="comp-income" class="component-card p-3 border-2 border-orange-500 bg-orange-50 rounded-lg w-full text-center">
+                            <h3 class="font-semibold text-orange-800 text-sm">6a. Income Verification</h3>
+                            <p class="text-xs text-orange-600">e.g., Argyle, Checkr</p>
+                        </div>
+                         <div id="comp-bg" class="component-card p-3 border-2 border-amber-500 bg-amber-50 rounded-lg w-full text-center">
+                            <h3 class="font-semibold text-amber-800 text-sm">6b. Background Check</h3>
+                            <p class="text-xs text-amber-600">e.g., JDP, Checkr</p>
+                        </div>
+                        <p class="text-sm mt-1 text-gray-600 text-center">Database portal initiates automated checks.</p>
+                    </div>
+                    
+                    <div class="md:col-span-3 flex justify-center h-12">
+                        <div class="flow-arrow-vert"></div>
+                    </div>
+
+                     <div class="md:col-span-3 text-center">
+                        <div id="comp-admin" class="component-card p-4 border-2 border-indigo-500 bg-indigo-50 rounded-lg inline-block">
+                            <h3 class="font-semibold text-indigo-800">7. Admin Review & Approval</h3>
+                            <p class="text-xs text-indigo-600 mt-1">via Database Admin Interface</p>
+                        </div>
+                        <p class="text-sm mt-2 text-gray-600">Program administrator logs in, reviews, and approves the application.</p>
+                    </div>
+                    
+                    <div class="md:col-span-3 flex justify-center h-12">
+                        <div class="flow-arrow-vert"></div>
+                    </div>
+
+                    <div class="md:col-span-3 text-center">
+                        <div id="comp-app" class="component-card p-4 border-2 border-lime-500 bg-lime-50 rounded-lg inline-block">
+                            <h3 class="font-semibold text-lime-800">8. Mobile Companion App</h3>
+                            <p class="text-xs text-lime-600 mt-1">e.g., Gary Community</p>
+                        </div>
+                        <p class="text-sm mt-2 text-gray-600">Family is notified of approval and logs into the companion app using their IdP.</p>
+                    </div>
+
+                </div>
+             </div>
+        </section>
+
+    </div>
+
+    <div id="component-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content bg-white rounded-lg shadow-2xl w-full max-w-2xl p-6 md:p-8 transform scale-95">
+            <div class="flex justify-between items-start">
+                <h2 id="modal-title" class="text-2xl font-bold text-gray-900">Component Details</h2>
+                <button id="modal-close" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div id="modal-body" class="mt-4 text-gray-600 space-y-4">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('component-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const modalClose = document.getElementById('modal-close');
+
+            const componentDetails = {
+                'comp-finder': {
+                    title: 'Subsidy Program Finder/Screener',
+                    content: `
+                        <p><strong>Role:</strong> Serves as the initial public-facing portal for families. It allows them to anonymously search for childcare resources and pre-screen their potential eligibility for the CAP program. This initial interaction is designed to be low-friction and informative.</p>
+                        <p><strong>Example Vendors:</strong> MyFriendBen</p>
+                        <p><strong>Key Interaction:</strong> This is the entry point of the user journey. It facilitates anonymous searching and, when the user decides to apply, initiates the first step of the OAuth/OIDC flow by redirecting the user to the Digital Identity Provider.</p>
+                    `
+                },
+                'comp-idp-1': {
+                    title: 'Digital Identity Provider (IdP)',
+                    content: `
+                        <p><strong>Role:</strong> The central authority for authenticating users. It manages digital profiles, enforces security like Multi-Factor Authentication (MFA), and issues secure tokens (OAuth access tokens, OIDC ID tokens) that grant other CAP components authorized access to user data.</p>
+                        <p><strong>Example Vendors:</strong> Google, MyColorado, OKTA</p>
+                        <p><strong>Key Interaction:</strong> The user is redirected here to log in. The IdP handles the entire authentication process, never exposing the user's credentials to the application itself. It is the root of trust in the federated system.</p>
+                    `
+                },
+                'comp-form': {
+                    title: 'Program Application Form Builder',
+                    content: `
+                        <p><strong>Role:</strong> Provides the dynamic and user-friendly forms for the CAP application. It must seamlessly integrate with the IdP for pre-filling fields and securely submit completed data to the Program Application Database.</p>
+                        <p><strong>Example Vendors:</strong> JotForm, FormStack</p>
+                        <p><strong>Key Interaction:</strong> Acts as an OAuth/OIDC client. After the user authenticates with the IdP, the form builder receives an authorization code, exchanges it for an ID token, and uses the claims in that token to pre-fill user information like name and address, saving the user time and reducing errors.</p>
+                    `
+                },
+                'comp-idp-2': {
+                    title: 'Data Consent (via Digital Identity Provider)',
+                    content: `
+                        <p><strong>Role:</strong> This is not a separate component, but a critical step in the OAuth 2.0 and OpenID Connect (OIDC) flow, managed by the Digital Identity Provider.</p>
+                        <p><strong>Key Interaction:</strong> Before the IdP sends identity information to the Application Form, it presents the user with a consent screen. This screen explicitly lists the data being requested (e.g., 'View your name', 'View your email address'). The user must grant permission before any data is shared. This ensures user control and transparency, a core principle of 'Privacy by Design'.</p>
+                    `
+                },
+                'comp-db': {
+                    title: 'Program Application Database',
+                    content: `
+                        <p><strong>Role:</strong> The central, secure repository for all submitted CAP applications and related data. The administrative interface allows program staff to manage the entire application lifecycle.</p>
+                        <p><strong>Example Vendors:</strong> Salesforce, HubSpot</p>
+                        <p><strong>Key Interaction:</strong> Receives the final application data from the form builder. It then acts as an orchestration hub, initiating server-to-server API calls to the external verification services using a secure OAuth flow (like the Client Credentials Grant).</p>
+                    `
+                },
+                'comp-income': {
+                    title: 'Income Verification Service',
+                    content: `
+                        <p><strong>Role:</strong> A specialized third-party service that securely verifies the income and employment details provided by applicants. This is a critical step for determining eligibility.</p>
+                        <p><strong>Example Vendors:</strong> Argyle, Checkr</p>
+                        <p><strong>Key Interaction:</strong> Receives a secure, authorized API request from the Program Database containing the minimal necessary data to perform a verification. It returns a report back to the database, often via a webhook for real-time updates.</p>
+                    `
+                },
+                'comp-bg': {
+                    title: 'Background Check Service',
+                    content: `
+                        <p><strong>Role:</strong> A third-party service that conducts necessary background checks as mandated by program policy to ensure safety and compliance.</p>
+                        <p><strong>Example Vendors:</strong> JDP, Checkr</p>
+                        <p><strong>Key Interaction:</strong> Similar to the income service, it receives a secure API request from the Program Database. This interaction adheres to the principle of "minimal disclosure," sending only the data required for the check.</p>
+                    `
+                },
+                'comp-admin': {
+                    title: 'Admin Review & Approval',
+                    content: `
+                        <p><strong>Role:</strong> This represents the human-in-the-loop process where a program administrator reviews the complete application, including the results from the verification services, to make a final approval decision.</p>
+                        <p><strong>Key Interaction:</strong> The administrator securely logs into the Database's admin portal, likely using the same (or a dedicated) IdP to ensure strong authentication (MFA). Their access is governed by Role-Based Access Control (RBAC) to enforce the principle of least privilege.</p>
+                    `
+                },
+                'comp-app': {
+                    title: 'Mobile Program Companion App',
+                    content: `
+                        <p><strong>Role:</strong> Provides approved families with a secure mobile interface to manage their benefits, receive notifications, and interact with the program post-approval.</p>
+                        <p><strong>Example Vendor:</strong> Gary Community</p>
+                        <p><strong>Key Interaction:</strong> The mobile app acts as another OAuth client. When the user first opens it, they are prompted to log in using their Digital Identity Provider. This provides a seamless, secure SSO experience, as they use the same credentials they used to apply. The app uses the secure 'Authorization Code Flow with PKCE', which is the best practice for mobile applications.</p>
+                    `
+                }
+            };
+
+            document.querySelectorAll('.component-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const details = componentDetails[card.id];
+                    if (details) {
+                        modalTitle.textContent = details.title;
+                        modalBody.innerHTML = details.content;
+                        modal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                        setTimeout(() => {
+                           modal.querySelector('.modal-content').classList.remove('scale-95');
+                           modal.classList.remove('opacity-0');
+                        }, 10);
+                    }
+                });
+            });
+
+            const closeModal = () => {
+                modal.querySelector('.modal-content').classList.add('scale-95');
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            };
+
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
